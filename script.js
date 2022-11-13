@@ -1,5 +1,4 @@
 'use strict';
-
 // Selecting elements
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
@@ -12,6 +11,9 @@ const diceEl = document.querySelector('.dice');
 const btnNew = document.querySelector('.btn--new');
 const btnRoll = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
+const btnWin = document.querySelector('.btn--win');
+
+
 
 //starting condition
 score0El.textContent = 0;
@@ -68,7 +70,7 @@ btnHold.addEventListener('click', function () {
       // 2. check if player's score is >= 100
       //finish the game
 
-      if (scores[activePlayer] >= 1)
+      if (scores[activePlayer] >= winScore)
       {
          // game finished
          playing = false;
@@ -87,26 +89,50 @@ btnHold.addEventListener('click', function () {
 
 
 });
+ 
 
-btnNew.addEventListener('click', function () {
-   console.log(`new clicked`)
-   document.querySelector(`.player--${activePlayer}`).classList.remove('player--winner');
-   currentScore = 0;
-   document.getElementById(`current--${activePlayer}`).textContent = currentScore;
-   currentScore = 0;
-   document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+const recet = function () {
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--winner');
+      currentScore = 0;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
+      currentScore = 0;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
 
-   activePlayer = 0;
-   scores = [0, 0];
-   diceEl.classList.add('hidden');
-   player0El.classList.add('player--active');
-   player1El.classList.remove('player--active');
-   document.querySelector(`.player--${activePlayer}`).classList.remove('player--winner');
+      activePlayer = 0;
+      scores = [0, 0];
+      diceEl.classList.add('hidden');
+      player0El.classList.add('player--active');
+      player1El.classList.remove('player--active');
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--winner');
 
-   document.getElementById(`score--0`).textContent = 0;
-   document.getElementById(`score--1`).textContent = 0; 
+      document.getElementById(`score--0`).textContent = 0;
+      document.getElementById(`score--1`).textContent = 0;
 
-   playing = true;
+      playing = true;
 
 
-})
+}
+   
+
+btnNew.addEventListener('click', recet);
+let winScore;
+winScore = Number(
+   prompt(`Type the wining score when player will win ! Input a number .`)
+);
+btnWin.textContent = `🏆 Win Score = ${winScore}`;
+
+btnWin.addEventListener('click', function () {
+   recet();
+   let winScore2;
+   winScore2 = Number(
+      prompt(`Type the wining score when player will win ! Input a number .`)
+   );
+   btnWin.textContent = `🏆 Win Score = ${winScore2}`;
+   winScore = winScore2;
+});
